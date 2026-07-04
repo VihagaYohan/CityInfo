@@ -1,7 +1,9 @@
+using CityInfo.API.Context;
 using CityInfo.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,12 +16,11 @@ namespace CityInfo.API
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -34,6 +35,9 @@ namespace CityInfo.API
 
             // register with the mail service with a transient lifetime
             services.AddTransient<ILocalMainService, LocalMailService>();
+            // register EF core context against SQL server
+            services.AddDbContext<CityInfoContext>(options => options.UseSqlServer(
+                Configuration.GetConnectionString("CityInfoDB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
