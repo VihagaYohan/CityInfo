@@ -20,6 +20,10 @@ namespace CityInfo.API.Controllers
 
         [HttpGet("{id}")]
         public ActionResult<CityDto> GetCity(int id) {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+
             if (id == 1) {
                 return Ok(new CityDto { 
                 Id = 1,
