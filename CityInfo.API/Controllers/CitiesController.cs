@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CityInfo.API.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace CityInfo.API.Controllers
@@ -15,6 +16,18 @@ namespace CityInfo.API.Controllers
                 new { id = 2, name = "Kandy"},
                 new { id = 3, name = "Wattala"}
             });
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<CityDto> GetCity(int id) {
+            if (id == 1) {
+                return Ok(new CityDto { 
+                Id = 1,
+                Name = "Colombo",
+                Description = "Commercial capital and larget city of Sri Lanka"});
+            }
+
+            return NotFound();
         }
     }
 }

@@ -1,0 +1,5 @@
+﻿@CityInfo.API_HostAddress = https://localhost:44302
+
+GET {{CityInfo.API_HostAddress}}/api/cities
+
+###
