@@ -1,4 +1,5 @@
 ﻿using CityInfo.API.Models;
+using CityInfo.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -8,6 +9,12 @@ namespace CityInfo.API.Controllers
     [Route("api/cities")]
     public class CitiesController : ControllerBase
     {
+        private readonly ILocalMainService _mailService;
+
+        public CitiesController(ILocalMainService mailService) {
+            _mailService = mailService;
+        }
+
         [HttpGet]
         public JsonResult GetCities()
         {
@@ -25,6 +32,9 @@ namespace CityInfo.API.Controllers
             }
 
             if (id == 1) {
+
+                this._mailService.SendMail();
+
                 return Ok(new CityDto { 
                 Id = 1,
                 Name = "Colombo",
